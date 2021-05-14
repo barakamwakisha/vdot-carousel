@@ -1,8 +1,15 @@
-import Vue from "vue";
-import Carousel from "./components/Carousel.vue";
+import VDotCarousel from './components/Carousel.vue';
 
-Vue.config.productionTip = false;
+const VDotCarouselPlugin = {
+  // eslint-disable-next-line no-unused-vars
+  install(Vue, options) {
+    Vue.component(VDotCarousel.name, VDotCarousel);
+  }
+}
 
-new Vue({
-  render: (h) => h(Carousel),
-}).$mount("#app");
+// Automatic installation if Vue has been added to the global scope.
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(VDotCarouselPlugin);
+}
+
+export default VDotCarouselPlugin;

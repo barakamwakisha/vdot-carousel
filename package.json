@@ -1,15 +1,22 @@
 {
   "name": "vdot-carousel",
   "version": "0.1.0",
-  "private": true,
+  "description": "A fully customizable, elegant image carousel for Vue",
+  "authors": {
+    "name": "Baraka Mwakisha",
+    "email": "barakamwakisha@gmail.com"
+  },
+  "repository": "github:barakamwakisha/vdot-carousel",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "core-js": "^3.6.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -21,6 +28,8 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.2.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.5.3",
+    "vue": "^2.6.12"
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel">
+  <div class="carousel" :style="`height: ${height}px`">
     <button
       ref="leftButton"
       @click="slideLeft"
@@ -52,7 +52,7 @@
         v-for="(image, index) in images"
         :key="index"
         class="carousel__indicator"
-        :class="currentSlideIndex == index ? 'current-slide': ''"
+        :class="currentSlideIndex == index ? 'current-slide' : ''"
         :ref="`vdot-indicator-${index}`"
         @click="moveToSlide(index)"
       ></button>
@@ -63,16 +63,23 @@
 <script>
 export default {
   name: "v-dot-carousel",
+  props: {
+    height: {
+      type: Number,
+      required: true,
+    },
+    images: {
+      type: Array,
+      required: true,
+    },
+  },
+
   data() {
     return {
-      images: [
-        "https://images.unsplash.com/photo-1620935900933-2aadcf017c7a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-        "https://images.unsplash.com/photo-1620973366052-34415f7512c2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
-        "https://images.unsplash.com/photo-1614138159368-242fb95e79e6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80",
-      ],
       currentSlideIndex: 0,
     };
   },
+  
   methods: {
     moveToSlide(targetSlideIndex) {
       const track = this.$refs.carouselTrack;
@@ -112,7 +119,6 @@ export default {
 <style>
 .carousel {
   position: relative;
-  height: 600px;
   width: 80%;
   margin: 0 auto;
 }
@@ -196,7 +202,7 @@ export default {
   border-radius: 25%;
   background: rgb(255, 255, 255);
   opacity: 0.6;
-  margin: 0 6px;
+  margin: 0 8px;
   cursor: pointer;
 }
 
