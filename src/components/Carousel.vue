@@ -1,6 +1,10 @@
 <template>
   <div class="carousel">
-    <button class="carousel__button carousel__button--left">
+    <button
+      ref="leftButton"
+      @click="slideLeft"
+      class="carousel__button carousel__button--left"
+    >
       <svg
         viewBox="0 0 16 16"
         role="presentation"
@@ -14,31 +18,22 @@
       </svg>
     </button>
     <div class="carousel__track-container">
-      <ul class="carousel__track">
-        <li class="carousel__slide">
-          <img
-            class="carousel__image"
-            src="https://images.unsplash.com/photo-1620935900933-2aadcf017c7a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-            alt="carousel image"
-          />
-        </li>
-        <li class="carousel__slide">
-          <img
-            class="carousel__image"
-            src="https://images.unsplash.com/photo-1620973366052-34415f7512c2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80"
-            alt="carousel image"
-          />
-        </li>
-        <li class="carousel__slide">
-          <img
-            class="carousel__image"
-            src="https://images.unsplash.com/photo-1614138159368-242fb95e79e6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
-            alt="carousel image"
-          />
+      <ul ref="carouselTrack" class="carousel__track">
+        <li
+          class="carousel__slide"
+          v-for="(image, index) in images"
+          :key="index"
+          :ref="`vdot-slide-${index}`"
+        >
+          <img class="carousel__image" :src="image" alt="carousel image" />
         </li>
       </ul>
     </div>
-    <button class="carousel__button carousel__button--right">
+    <button
+      ref="rightButton"
+      @click="slideRight"
+      class="carousel__button carousel__button--right"
+    >
       <svg
         viewBox="0 0 16 16"
         role="presentation"
@@ -53,12 +48,66 @@
     </button>
 
     <div class="carousel__nav">
-      <button class="carousel__indicator current-slide"></button>
-      <button class="carousel__indicator"></button>
-      <button class="carousel__indicator"></button>
+      <button
+        v-for="(image, index) in images"
+        :key="index"
+        class="carousel__indicator"
+        :class="currentSlideIndex == index ? 'current-slide': ''"
+        :ref="`vdot-indicator-${index}`"
+        @click="moveToSlide(index)"
+      ></button>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "v-dot-carousel",
+  data() {
+    return {
+      images: [
+        "https://images.unsplash.com/photo-1620935900933-2aadcf017c7a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+        "https://images.unsplash.com/photo-1620973366052-34415f7512c2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
+        "https://images.unsplash.com/photo-1614138159368-242fb95e79e6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80",
+      ],
+      currentSlideIndex: 0,
+    };
+  },
+  methods: {
+    moveToSlide(targetSlideIndex) {
+      const track = this.$refs.carouselTrack;
+      const targetSlide = this.$refs[`vdot-slide-${targetSlideIndex}`][0];
+      const amountToMove = targetSlide.style.left;
+
+      track.style.transform = `translateX(-${amountToMove})`;
+      this.currentSlideIndex = targetSlideIndex;
+    },
+
+    slideRight() {
+      if (this.currentSlideIndex == this.images.length - 1) {
+        this.currentSlideIndex = -1;
+      }
+      this.moveToSlide(this.currentSlideIndex + 1);
+    },
+
+    slideLeft() {
+      if (this.currentSlideIndex == 0) {
+        this.currentSlideIndex = this.images.length;
+      }
+      this.moveToSlide(this.currentSlideIndex - 1);
+    },
+  },
+
+  mounted() {
+    const slides = Array.from(this.$refs.carouselTrack.children);
+    const slideWidth = slides[0].getBoundingClientRect().width;
+
+    slides.forEach((slide, index) => {
+      slide.style.left = `${slideWidth * index}px`;
+    });
+  },
+};
+</script>
 
 <style>
 .carousel {
@@ -75,15 +124,18 @@
 }
 
 .carousel__track-container {
-  background: lightgreen;
   height: 100%;
   position: relative;
+  overflow: hidden;
 }
 
 .carousel__track {
   padding: 0;
   margin: 0;
   list-style: none;
+  position: relative;
+  height: 100%;
+  transition: transform 450ms ease-in-out;
 }
 
 .carousel__slide {
@@ -97,8 +149,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  transform: scale(.9, .9);
-  background: rgba(255,255,255, .85);
+  transform: scale(0.9, 0.9);
+  background: rgba(255, 255, 255, 0.85);
   border: 0;
   color: #000;
   border-radius: 50%;
@@ -109,43 +161,46 @@
 }
 
 .carousel__button:hover {
-    background: rgba(255,255,255, 1);
-    transform: scale(1, 1);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1, 1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .carousel__button--left {
-    position: absolute;
-    left: 0;
-    margin-left: 16px;
+  position: absolute;
+  left: 0;
+  margin-left: 24px;
 }
 
 .carousel__button--right {
-    position: absolute;
-    right: 0;
-    margin-right: 16px;
+  position: absolute;
+  right: 0;
+  margin-right: 24px;
 }
 
 .carousel__nav {
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-    position: absolute;
-    width: 100%;
-    z-index: 1000;
-    bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+  bottom: 1rem;
 }
 
 .carousel__indicator {
-    border: 0;
-    width: 4px;
-    height: 4px;
-    background: rgb(255, 255, 255);
-    opacity: 0.6;
-    margin: 0 4px;
+  border: 0;
+  width: 4px;
+  height: 6px;
+  border-radius: 25%;
+  background: rgb(255, 255, 255);
+  opacity: 0.6;
+  margin: 0 6px;
+  cursor: pointer;
 }
 
 .carousel__indicator.current-slide {
-    opacity: 1; 
+  opacity: 1;
 }
 </style>
