@@ -2,18 +2,24 @@
   "name": "vdot-carousel",
   "version": "0.1.0",
   "description": "A fully customizable, elegant image carousel for Vue",
+  "private": false,
+  "main": "dist/vdot-carousel.umd.min.js",
+  "unpkg": "dist/vdot-carousel.umd.min.js",
+  "jsdelivr": "dist/vdot-carousel.umd.min.js",
   "authors": {
     "name": "Baraka Mwakisha",
     "email": "barakamwakisha@gmail.com"
   },
+  "license": "MIT",
+  "homepage": "https://barakamwakisha.github.io/vdot-carousel/",
   "repository": "github:barakamwakisha/vdot-carousel",
-  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name vdot-carousel src/main.js",
+    "lint": "vue-cli-service lint",
+    "prepublishOnly": "$npm_execpath build",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "lint": "vue-cli-service lint"
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "core-js": "^3.6.5"
@@ -31,5 +37,12 @@
     "vue-template-compiler": "^2.6.11",
     "vuepress": "^1.5.3",
     "vue": "^2.6.12"
-  }
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "image",
+    "carousel",
+    "slideshow"
+  ]
 }
