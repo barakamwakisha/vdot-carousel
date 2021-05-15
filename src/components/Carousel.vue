@@ -4,6 +4,7 @@
       ref="leftButton"
       @click="slideLeft"
       class="carousel__button carousel__button--left"
+      :style="`color: ${scrollButtonColor}; background: ${scrollButtonBackgroundColor}`"
     >
       <svg
         viewBox="0 0 16 16"
@@ -33,6 +34,7 @@
       ref="rightButton"
       @click="slideRight"
       class="carousel__button carousel__button--right"
+      :style="`color: ${scrollButtonColor}; background: ${scrollButtonBackgroundColor}`"
     >
       <svg
         viewBox="0 0 16 16"
@@ -53,6 +55,7 @@
         :key="index"
         class="carousel__indicator"
         :class="currentSlideIndex == index ? 'current-slide' : ''"
+        :style="`background: ${dotIndicatorColor}`"
         :ref="`vdot-indicator-${index}`"
         @click="moveToSlide(index)"
       ></button>
@@ -72,6 +75,21 @@ export default {
       type: Array,
       required: true,
     },
+    dotIndicatorColor: {
+      type: String,
+      required: false,
+      default: '#FFF'
+    },
+    scrollButtonColor: {
+      type: String,
+      required: false,
+      default: '#000'
+    },
+    scrollButtonBackgroundColor: {
+      type: String,
+      required: false,
+      default: '#FFF'
+    }
   },
 
   data() {
@@ -156,7 +174,7 @@ export default {
   top: 50%;
   transform: translateY(-50%);
   transform: scale(0.9, 0.9);
-  background: rgba(255, 255, 255, 0.85);
+  opacity: 0.85;
   border: 0;
   color: #000;
   border-radius: 50%;
@@ -167,7 +185,7 @@ export default {
 }
 
 .carousel__button:hover {
-  background: rgba(255, 255, 255, 1);
+  opacity: 1;
   transform: scale(1, 1);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -200,7 +218,6 @@ export default {
   width: 4px;
   height: 6px;
   border-radius: 25%;
-  background: rgb(255, 255, 255);
   opacity: 0.6;
   margin: 0 8px;
   cursor: pointer;
