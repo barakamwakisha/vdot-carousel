@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel" :style="`height: ${height}px`">
+  <div class="carousel" :style="`height: ${height}; width: ${width}`">
     <button
       ref="leftButton"
       @click="slideLeft"
@@ -26,6 +26,7 @@
           :key="index"
           :ref="`vdot-slide-${index}`"
         >
+          <!-- TODO: Add support for dynamic altertanative text -->
           <img class="carousel__image" :src="image" alt="carousel image" />
         </li>
       </ul>
@@ -67,29 +68,42 @@
 export default {
   name: "v-dot-carousel",
   props: {
-    height: {
-      type: Number,
-      required: true,
-    },
-    images: {
-      type: Array,
-      required: true,
-    },
-    dotIndicatorColor: {
-      type: String,
-      required: false,
-      default: '#FFF'
-    },
-    scrollButtonColor: {
-      type: String,
-      required: false,
-      default: '#000'
-    },
-    scrollButtonBackgroundColor: {
-      type: String,
-      required: false,
-      default: '#FFF'
-    }
+    /**
+       * The width of the carousel
+       * @examples 50%, 200px, 5vw, 3rem
+    */
+    width: { type: String, required: true },
+
+    /**
+       * The height of the carousel
+       * @examples 50%, 200px, 5vw, 3rem
+    */
+    height: { type: String, required: true },
+
+    /**
+       * An array of image urls to display on the carousel
+       * @examples ["https://images.unsplash.com/photo-1620935900933-2aadcf017c7a", "..."]
+    */
+    // TODO: Add support for dynamic altertanative text
+    images: { type: Array, required: true },
+
+    /**
+       * The color of the dot slide indicators at the bottom of the carousel
+       * @examples red, #FFF, rgb(0, 0, 0)
+    */
+    dotIndicatorColor: { type: String, required: false, default: '#FFF' },
+
+    /**
+       * The color of the carets in the left and right carousel scroll buttons
+       * @examples red, #FFF, rgb(0, 0, 0)
+    */
+    scrollButtonColor: { type: String, required: false, default: '#000' },
+
+     /**
+       * The background color of the left and right carousel scroll buttons
+       * @examples red, #FFF, rgb(0, 0, 0)
+    */
+    scrollButtonBackgroundColor: { type: String, required: false, default: '#FFF' }
   },
 
   data() {
