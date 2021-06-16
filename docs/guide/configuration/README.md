@@ -20,15 +20,27 @@ Array containing image urls of images to display in the carousel.
 ]
 ```
 
-## height
+## width
 
-type: `Number`
+type: `String`
 
-Set desired height of the carousel in pixel units
+Set desired width of the carousel in any valid css units
 ```vue
 <v-dot-carousel
-  :images="images"
-  :height="200">
+  ...
+  :width="'100%'">
+</v-dot-carousel>
+```
+
+## height
+
+type: `String`
+
+Set desired height of the carousel in any valid css units
+```vue
+<v-dot-carousel
+  ...
+  :height="'200px'">
 </v-dot-carousel>
 ```
 
