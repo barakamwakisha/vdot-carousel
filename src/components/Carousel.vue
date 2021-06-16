@@ -215,11 +215,12 @@ export default {
 
 .carousel__indicator {
   border: 0;
-  width: 4px;
-  height: 6px;
-  border-radius: 25%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
   opacity: 0.6;
   margin: 0 8px;
+  padding: 0;
   cursor: pointer;
 }
 
