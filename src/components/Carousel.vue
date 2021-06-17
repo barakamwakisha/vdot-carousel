@@ -27,7 +27,7 @@
           :ref="`vdot-slide-${index}`"
         >
           <!-- TODO: Add support for dynamic altertanative text -->
-          <img class="carousel__image" :src="image" alt="carousel image" />
+          <img class="carousel__image" :src="image" alt="carousel image"/>
         </li>
       </ul>
     </div>
@@ -109,6 +109,7 @@ export default {
   data() {
     return {
       currentSlideIndex: 0,
+      x0: null,
     };
   },
   
@@ -135,15 +136,41 @@ export default {
       }
       this.moveToSlide(this.currentSlideIndex - 1);
     },
+
+    slide(e) {
+      let dx = this.unify(e).clientX - this.x0, s = Math.sign(dx);
+      if(s == -1) {
+        this.slideRight();
+      } else if(s == 1) {
+        this.slideLeft();
+      }
+    },
+
+    unify(e) {
+      return e.changedTouches ? e.changedTouches[0] : e;
+    },
+
+    lock(e) {
+      this.x0 = this.unify(e).clientX;
+    }
   },
 
   mounted() {
-    const slides = Array.from(this.$refs.carouselTrack.children);
+    const track = this.$refs.carouselTrack;
+    const slides = Array.from(track.children);
     const slideWidth = slides[0].getBoundingClientRect().width;
 
     slides.forEach((slide, index) => {
       slide.style.left = `${slideWidth * index}px`;
     });
+
+    track.addEventListener('touchmove', e => e.preventDefault(), false);
+
+    track.addEventListener('mousedown', this.lock, false);
+    track.addEventListener('touchstart', this.lock, false);
+
+    track.addEventListener('mouseup', this.move, false);
+    track.addEventListener('touchend', this.move, false);
   },
 };
 </script>
@@ -159,6 +186,11 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
+}
+
+.carousel__image::selection {
+  background: none;
 }
 
 .carousel__track-container {

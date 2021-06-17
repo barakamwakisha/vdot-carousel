@@ -43,8 +43,8 @@ components: {
 <template>
   <div>
     <v-dot-carousel
-      :width="'100%'"
-      :height="'400px'"
+      :width="'300px'"
+      :height="'300px'"
       :images="images"/>
   </div>
 </template>
