@@ -138,10 +138,10 @@ export default {
     },
 
     slide(e) {
-      let dx = this.unify(e).clientX - this.x0, s = Math.sign(dx);
-      if(s == -1) {
+      const dx = this.unify(e).clientX - this.x0, s = Math.sign(dx);
+      if(s == -1 && this.currentSlideIndex != this.images.length - 1) {
         this.slideRight();
-      } else if(s == 1) {
+      } else if(s == 1 && this.currentSlideIndex != 0) {
         this.slideLeft();
       }
     },
@@ -169,8 +169,8 @@ export default {
     track.addEventListener('mousedown', this.lock, false);
     track.addEventListener('touchstart', this.lock, false);
 
-    track.addEventListener('mouseup', this.move, false);
-    track.addEventListener('touchend', this.move, false);
+    track.addEventListener('mouseup', this.slide, false);
+    track.addEventListener('touchend', this.slide, false);
   },
 };
 </script>
