@@ -1,6 +1,6 @@
 {
   "name": "vdot-carousel",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "A fully customizable, elegant image carousel for Vue",
   "private": false,
   "main": "dist/vdot-carousel.umd.min.js",
