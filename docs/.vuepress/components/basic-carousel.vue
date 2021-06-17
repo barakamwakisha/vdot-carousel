@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dot-carousel :width="'400px'" :height="'400px'" :images="images" />
+    <v-dot-carousel :width="'300px'" :height="'300px'" :images="images" />
   </div>
 </template>
 

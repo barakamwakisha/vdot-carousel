@@ -4,7 +4,10 @@
 </p>
 
 # vdot-carousel
-
+<p align="center">
+<a href="https://www.npmjs.com/package/vdot-carousel" alt="vdot-carousel NPM">
+        <img src="https://img.shields.io/npm/v/vdot-carousel" /></a>
+</p>
 An easy to use, elegant and fully customizable image carousel for VueJS 
 
 ## Installing
