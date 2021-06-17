@@ -26,8 +26,7 @@
           :key="index"
           :ref="`vdot-slide-${index}`"
         >
-          <!-- TODO: Add support for dynamic altertanative text -->
-          <img class="carousel__image" :src="image" alt="carousel image"/>
+          <img class="carousel__image" :src="image.src" :alt="image.alt"/>
         </li>
       </ul>
     </div>
@@ -81,10 +80,9 @@ export default {
     height: { type: String, required: true },
 
     /**
-       * An array of image urls to display on the carousel
+       * An array of objects containing image src and alt attributes to display on the carousel
        * @examples ["https://images.unsplash.com/photo-1620935900933-2aadcf017c7a", "..."]
     */
-    // TODO: Add support for dynamic altertanative text
     images: { type: Array, required: true },
 
     /**
@@ -204,7 +202,7 @@ export default {
   list-style: none;
   position: relative;
   height: 100%;
-  transition: transform 450ms ease-in-out;
+  transition: transform 250ms ease-in-out;
 }
 
 .carousel__slide {

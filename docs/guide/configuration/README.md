@@ -10,12 +10,10 @@ These options relate to the carousel as a whole
 
 type: `Array`
 
-Array containing image urls of images to display in the carousel.
+An array of objects containing image src and alt attributes to display on the carousel.
 ```javascript
 [
-    "https://images.unsplash.com/photo-1620953749696-38989c40eadb",
-    "https://images.unsplash.com/photo-1620973366052-34415f7512c2",
-    "https://images.unsplash.com/photo-1614138159368-242fb95e79e6",
+    { src: "https://images.unsplash.com/photo-1620953749696-38989c40eadb", alt: "Some alternative text" }
     // ...
 ]
 ```

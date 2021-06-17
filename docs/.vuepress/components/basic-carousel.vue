@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dot-carousel :width="'300px'" :height="'300px'" :images="images" />
+    <v-dot-carousel :width="'300px'" :height="'300px'" :images="images.map(url => ({ src: url, alt: 'Alternative Text' }))" />
   </div>
 </template>
 
